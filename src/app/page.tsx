@@ -7,7 +7,7 @@ import Screen from "@/components/ui/screen"
 
 export default function Home() {
   return (
-    <Screen className="justify-center gap-8">
+    <Screen className="h-dvh justify-center gap-8">
       <Header />
       <section className="grid grid-cols-4 gap-4">
         <Link className="col-span-full" href="/reserve">
