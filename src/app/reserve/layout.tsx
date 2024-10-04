@@ -8,7 +8,11 @@ type TProps = {
 export default function Layout({ children }: TProps) {
   return (
     <>
-      <Header className="pt-8" logoSize="h-6" />
+      <Header
+        className="pt-8 px-8 flex items-center w-full justify-between"
+        logoSize="h-6"
+        backButton
+      />
       {children}
     </>
   )

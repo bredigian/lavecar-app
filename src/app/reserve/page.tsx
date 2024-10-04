@@ -17,7 +17,7 @@ import Title from "@/components/ui/title"
 
 export default function Reserve() {
   return (
-    <Screen style={{ minHeight: `calc(100svh - 56px` }} className="gap-8">
+    <Screen style={{ minHeight: `calc(100svh - 68px` }} className="gap-8">
       <section className="space-y-4">
         <Title>Reservar</Title>
         <Paragraph>
