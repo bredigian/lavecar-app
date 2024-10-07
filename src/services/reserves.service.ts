@@ -18,3 +18,16 @@ export const reserve = async (payload: TReserve) => {
 
   return data as TReserve
 }
+
+export const getReserveDetail = async (id: TReserve["id"]) => {
+  const options: RequestInit = {
+    method: "GET",
+  }
+  const PATH = `${API_URL}/v1/reserves/detail?id=${id}`
+  const res = await fetch(PATH, options)
+
+  const data: TReserve | TError = await res.json()
+  if (!res.ok) return new Error((data as TError).message)
+
+  return data as TReserve
+}
