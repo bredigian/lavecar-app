@@ -17,8 +17,8 @@ export type TReserve = {
   user_name: string
   user_email: string
   user_phone: string
-  status: keyof RESERVE_STATUS
-  payment_status: keyof PAYMENT_STATUS
+  status: keyof typeof RESERVE_STATUS
+  payment_status: keyof typeof PAYMENT_STATUS
   created_at?: Date
   updated_at?: Date
 }

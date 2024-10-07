@@ -21,12 +21,19 @@ import { ReloadIcon } from "@radix-ui/react-icons"
 import { TReserve } from "@/types/reserves.types"
 import { TWeekdayWithAssignedReserves } from "@/types/weekdays.types"
 import { TWorkhour } from "@/types/workhours.types"
+import { reserve } from "@/services/reserves.service"
+import { toast } from "sonner"
+import { useRouter } from "next/navigation"
+
+const WEEKDAYS = [0, 1, 2, 3, 4, 5, 6]
 
 type TProps = {
   weekdays: TWeekdayWithAssignedReserves[]
 }
 
 export const ReserveForm = ({ weekdays }: TProps) => {
+  const { push } = useRouter()
+
   const {
     control,
     register,
@@ -119,8 +126,28 @@ export const ReserveForm = ({ weekdays }: TProps) => {
       return
     }
 
-    console.log(workhour)
-    console.log(values)
+    const [hour, minute] = workhour.split(":").map((item) => Number(item))
+
+    const date = DateTime.fromJSDate(values.date as Date)
+      .setZone("America/Argentina/Buenos_Aires")
+      .set({ hour, minute })
+      .toUTC()
+      .toJSDate()
+
+    const payload: TReserve = {
+      ...values,
+      date,
+      status: "PENDING",
+      payment_status: "PENDING",
+    }
+
+    try {
+      const { id } = await reserve(payload)
+      push(`reserves/${id}`)
+    } catch (e) {
+      if (e instanceof Error)
+        toast.error("Ocurrió un problema al reservar el turno.")
+    }
   }
 
   return (
@@ -150,7 +177,6 @@ export const ReserveForm = ({ weekdays }: TProps) => {
                 )
                 setAssignedReservesOfDay(day?.reserves as TReserve[])
                 setWorkhoursOfDay(day?.workhours as TWorkhour[])
-                // setMonth(new Date())
               }}
               disabled={[
                 ...disabledDates.map((item) => new Date(item)),
@@ -159,7 +185,7 @@ export const ReserveForm = ({ weekdays }: TProps) => {
                   after: DateTime.now().plus({ days: 7 }).toJSDate(),
                 },
                 {
-                  dayOfWeek: [0, 1, 2, 3, 4, 5, 6].filter((day) => {
+                  dayOfWeek: WEEKDAYS.filter((day) => {
                     if (
                       weekdays.find((weekday) => {
                         if (day === 0) return weekday.weekday === 7
@@ -197,13 +223,7 @@ export const ReserveForm = ({ weekdays }: TProps) => {
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Seleccione un horario" />
             </SelectTrigger>
-            <SelectContent
-              // ref={(ref) =>
-              //   temporary workaround from https://github.com/shadcn-ui/ui/issues/1220
-              //   ref?.addEventListener("touchend", (e) => e.preventDefault())
-              // }
-              className="w-full"
-            >
+            <SelectContent className="w-full">
               {workhoursOfDay.map((workhour) => {
                 const { hour, time } = workhour
                 const parsedHour = toTimeString(hour)
