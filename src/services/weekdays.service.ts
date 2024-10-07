@@ -1,4 +1,7 @@
+import { TWeekday, TWeekdayWithAssignedReserves } from "@/types/weekdays.types"
+
 import { API_URL } from "@/const/api"
+import { TError } from "@/types/errors.types"
 
 export const getAllWithWorkhours = async () => {
   const options: RequestInit = {
@@ -7,10 +10,10 @@ export const getAllWithWorkhours = async () => {
   const PATH = `${API_URL}/v1/weekdays`
 
   const res = await fetch(PATH, options)
-  const data = await res.json()
-  if (!res.ok) return new Error(data.error.message)
+  const data: TWeekday[] | TError = await res.json()
+  if (!res.ok) return new Error((data as TError).message)
 
-  return data
+  return data as TWeekday[]
 }
 
 export const getAllWithAssignedReserves = async () => {
@@ -20,8 +23,8 @@ export const getAllWithAssignedReserves = async () => {
   const PATH = `${API_URL}/v1/weekdays/unavailable-workhours`
 
   const res = await fetch(PATH, options)
-  const data = await res.json()
-  if (!res.ok) return new Error(data.error.message)
+  const data: TWeekdayWithAssignedReserves[] | TError = await res.json()
+  if (!res.ok) return new Error((data as TError).message)
 
-  return data
+  return data as TWeekdayWithAssignedReserves[]
 }
