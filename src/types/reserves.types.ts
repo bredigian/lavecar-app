@@ -21,4 +21,6 @@ export type TReserve = {
   payment_status: keyof typeof PAYMENT_STATUS
   created_at?: Date
   updated_at?: Date
+
+  reserve_number: number
 }

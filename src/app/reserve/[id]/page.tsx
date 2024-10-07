@@ -12,6 +12,7 @@ import Link from "next/link"
 import Screen from "@/components/ui/screen"
 import Title from "@/components/ui/title"
 import { getReserveDetail } from "@/services/reserves.service"
+import { toReserveOfNumberToString } from "@/lib/utils"
 
 type TParam = {
   id: TReserve["id"]
@@ -51,7 +52,7 @@ export default async function Reserve({ params }: TProps) {
     <Screen className="gap-8">
       <section className="flex items-center w-full justify-between">
         <Title>
-          ¡Turno #{id}
+          ¡Turno #{toReserveOfNumberToString(detail.reserve_number)}
           <br />
           reservado!
         </Title>

@@ -8,3 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 export function toTimeString(value: number) {
   return value.toString().padStart(2, "0")
 }
+
+export function toReserveOfNumberToString(value: number) {
+  return value.toString().padStart(6, "0")
+}
