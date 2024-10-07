@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { cn, toTimeString } from "@/lib/utils"
 import { useEffect, useState } from "react"
 
 import { Button } from "@/components/ui/button"
@@ -20,7 +21,6 @@ import { ReloadIcon } from "@radix-ui/react-icons"
 import { TReserve } from "@/types/reserves.types"
 import { TWeekdayWithAssignedReserves } from "@/types/weekdays.types"
 import { TWorkhour } from "@/types/workhours.types"
-import { toTimeString } from "@/lib/utils"
 
 type TProps = {
   weekdays: TWeekdayWithAssignedReserves[]
@@ -179,7 +179,12 @@ export const ReserveForm = ({ weekdays }: TProps) => {
         )}
       />
       <div className="flex flex-col gap-2 w-full">
-        <div className="flex items-center justify-between gap-12 w-full mt-4">
+        <div
+          className={cn(
+            "flex items-center justify-between gap-12 w-full",
+            !workhourError ? "my-4" : "mt-4"
+          )}
+        >
           <Label>Horario</Label>
           <Select
             onValueChange={(value) => {
