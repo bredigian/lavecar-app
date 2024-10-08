@@ -6,7 +6,7 @@ type TProps = {
 
 export default function Title({ children }: TProps) {
   return (
-    <h1 className="scroll-m-20 text-xl font-extrabold tracking-tight lg:text-5xl">
+    <h1 className="scroll-m-20 text-xl font-semibold tracking-tight lg:text-5xl">
       {children}
     </h1>
   )

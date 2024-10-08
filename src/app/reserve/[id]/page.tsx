@@ -74,10 +74,10 @@ export default async function Reserve({ params }: TProps) {
             <li className="text-sm">{detail.user_phone}</li>
           </ul>
           <div className="flex flex-col items-end gap-3">
-            <span className="bg-yellow-200 font-semibold text-sm py-1.5 px-2 rounded-md">
+            <span className="bg-yellow-200 font-medium text-sm py-1.5 px-2 rounded-md">
               {RESERVE_STATUS[detail.status]}
             </span>
-            <span className="bg-yellow-200 font-semibold text-sm py-1.5 px-2 rounded-md">
+            <span className="bg-yellow-200 font-medium text-sm py-1.5 px-2 rounded-md">
               {PAYMENT_STATUS[detail.payment_status]}
             </span>
           </div>
@@ -87,11 +87,11 @@ export default async function Reserve({ params }: TProps) {
         <CreditCard color="#ffffff" size={16} />
         <span>Pagar con Mercado Pago</span>
       </Button>
-      <p>
+      <p className="text-sm">
         Deberias entregar el vehículo a las{" "}
-        <strong>
+        <span className="font-semibold">
           {date.minus({ minutes: 15 }).toLocaleString(DateTime.TIME_SIMPLE)}
-        </strong>{" "}
+        </span>{" "}
         en la siguiente ubicación:
       </p>
     </Screen>

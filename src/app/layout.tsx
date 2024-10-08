@@ -1,7 +1,9 @@
 import "./globals.css"
 
+import { GeistSans } from "geist/font/sans"
 import type { Metadata } from "next"
 import { Toaster } from "sonner"
+import { cn } from "@/lib/utils"
 
 export const metadata: Metadata = {
   title: "LaveCAR",
@@ -15,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className="antialiased min-h-dvh">
+      <body className={cn("antialiased min-h-dvh", GeistSans.className)}>
         {children}
         <Toaster theme="system" />
       </body>
