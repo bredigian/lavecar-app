@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/drawer"
 
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { HaveReserveForm } from "./reserve-form"
 
 export const HaveReserveDialog = () => {
   return (
@@ -35,11 +35,8 @@ export const HaveReserveDialog = () => {
             A continuación ingrese el número de reserva
           </DrawerDescription>
         </DrawerHeader>
-        <form className="px-4">
-          <Input placeholder="#000001" />
-        </form>
-        <DrawerFooter>
-          <Button>Buscar</Button>
+        <HaveReserveForm />
+        <DrawerFooter className="pt-2">
           <DrawerClose asChild>
             <Button variant="outline">Cancelar</Button>
           </DrawerClose>

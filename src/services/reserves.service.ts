@@ -19,15 +19,23 @@ export const reserve = async (payload: TReserve) => {
   return data as TReserve
 }
 
-export const getReserveDetail = async (id: TReserve["id"]) => {
+export const getReserveDetail = async (
+  id: TReserve["id"] | TReserve["number"],
+  csr?: boolean
+) => {
   const options: RequestInit = {
     method: "GET",
   }
-  const PATH = `${API_URL}/v1/reserves/detail?id=${id}`
+  const PATH = `${API_URL}/v1/reserves/detail${
+    typeof id === "string" ? `?id=${id}` : `?number=${id}`
+  }`
   const res = await fetch(PATH, options)
 
   const data: TReserve | TError = await res.json()
-  if (!res.ok) return new Error((data as TError).message)
+  if (!res.ok) {
+    if (csr) throw new Error((data as TError).message)
 
+    return new Error((data as TError).message)
+  }
   return data as TReserve
 }

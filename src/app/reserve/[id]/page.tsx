@@ -52,7 +52,7 @@ export default async function Reserve({ params }: TProps) {
     <Screen className="gap-8">
       <section className="flex items-center w-full justify-between">
         <Title>
-          ¡Turno #{toReserveOfNumberToString(detail.reserve_number)}
+          ¡Turno #{toReserveOfNumberToString(detail.number)}
           <br />
           reservado!
         </Title>

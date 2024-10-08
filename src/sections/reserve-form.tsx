@@ -9,6 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { cn, toTimeString } from "@/lib/utils"
+import { getReserveDetail, reserve } from "@/services/reserves.service"
 import { useEffect, useState } from "react"
 
 import { Button } from "@/components/ui/button"
@@ -21,7 +22,6 @@ import { ReloadIcon } from "@radix-ui/react-icons"
 import { TReserve } from "@/types/reserves.types"
 import { TWeekdayWithAssignedReserves } from "@/types/weekdays.types"
 import { TWorkhour } from "@/types/workhours.types"
-import { reserve } from "@/services/reserves.service"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 
@@ -143,7 +143,7 @@ export const ReserveForm = ({ weekdays }: TProps) => {
 
     try {
       const { id } = await reserve(payload)
-      push(`reserves/${id}`)
+      push(`/reserve/${id}`)
     } catch (e) {
       if (e instanceof Error)
         toast.error("Ocurrió un problema al reservar el turno.")
@@ -333,6 +333,58 @@ export const ReserveForm = ({ weekdays }: TProps) => {
           <ReloadIcon className="animate-spin size-4" />
         )}
         <span>{!isSubmitting ? "Reservar" : "Reservando"}</span>
+      </Button>
+    </form>
+  )
+}
+
+type THaveReserve = {
+  number: TReserve["number"]
+}
+
+export const HaveReserveForm = () => {
+  const { push } = useRouter()
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<THaveReserve>()
+
+  const onSubmit = async (values: THaveReserve) => {
+    try {
+      const { id } = (await getReserveDetail(
+        Number(values.number),
+        true
+      )) as TReserve
+      push(`/reserve/${id}`)
+    } catch (e) {
+      if (e instanceof Error) toast.error(e.message)
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="px-4 space-y-4">
+      <div className="flex flex-col gap-2 w-full">
+        <Label>Núm. de reserva</Label>
+        <Input
+          {...register("number", {
+            required: { value: true, message: "El número es requerido." },
+          })}
+          type="number"
+          placeholder="000001"
+        />
+        {errors?.number && (
+          <small className="text-red-500">{errors.number.message}</small>
+        )}
+      </div>
+      <Button
+        disabled={isSubmitting}
+        className="w-full space-x-2"
+        type="submit"
+      >
+        {isSubmitting && <ReloadIcon className="size-4 animate-spin" />}
+        <span>{!isSubmitting ? "Buscar" : "Buscando"}</span>
       </Button>
     </form>
   )

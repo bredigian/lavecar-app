@@ -13,6 +13,7 @@ export enum PAYMENT_STATUS {
 
 export type TReserve = {
   id?: string
+  number: number
   date: Date | string
   user_name: string
   user_email: string
@@ -21,6 +22,4 @@ export type TReserve = {
   payment_status: keyof typeof PAYMENT_STATUS
   created_at?: Date
   updated_at?: Date
-
-  reserve_number: number
 }
