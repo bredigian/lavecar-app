@@ -4,15 +4,15 @@ import {
   RESERVE_STATUS,
   TReserve,
 } from "@/types/reserves.types"
+import { cn, toReserveOfNumberToString } from "@/lib/utils"
 
 import { Button } from "@/components/ui/button"
-import CreditCard from "@/components/icons/credit-card"
 import { DateTime } from "luxon"
+import { GeneratePayment } from "@/sections/payment-reserve"
 import Link from "next/link"
 import Screen from "@/components/ui/screen"
 import Title from "@/components/ui/title"
 import { getReserveDetail } from "@/services/reserves.service"
-import { toReserveOfNumberToString } from "@/lib/utils"
 
 type TParam = {
   id: TReserve["id"]
@@ -48,6 +48,7 @@ export default async function Reserve({ params }: TProps) {
     .setZone("America/Argentina/Buenos_Aires")
     .setLocale("es-AR")
 
+  const isPayed = detail.payment_status === "APPROVED"
   return (
     <Screen className="gap-8">
       <section className="flex items-center w-full justify-between">
@@ -77,16 +78,18 @@ export default async function Reserve({ params }: TProps) {
             <span className="bg-yellow-200 font-medium text-sm py-1.5 px-2 rounded-md">
               {RESERVE_STATUS[detail.status]}
             </span>
-            <span className="bg-yellow-200 font-medium text-sm py-1.5 px-2 rounded-md">
+            <span
+              className={cn(
+                "font-medium text-sm py-1.5 px-2 rounded-md",
+                isPayed ? "bg-green-500" : "bg-yellow-200"
+              )}
+            >
               {PAYMENT_STATUS[detail.payment_status]}
             </span>
           </div>
         </div>
       </section>
-      <Button className="w-full space-x-2">
-        <CreditCard color="#ffffff" size={16} />
-        <span>Pagar con Mercado Pago</span>
-      </Button>
+      <GeneratePayment disabled={isPayed} reserve={detail} />
       <p className="text-sm">
         Deberias entregar el vehículo a las{" "}
         <span className="font-semibold">

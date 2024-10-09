@@ -1,11 +1,9 @@
-"use client"
-
 import { Button } from "./ui/button"
 import { ChevronLeftIcon } from "@radix-ui/react-icons"
 import Image from "next/image"
+import Link from "next/link"
 import { cn } from "@/lib/utils"
 import logo from "@/assets/logo.png"
-import { useRouter } from "next/navigation"
 
 type TProps = {
   logoSize?: string
@@ -14,14 +12,14 @@ type TProps = {
 }
 
 export default function Header({ className, logoSize, backButton }: TProps) {
-  const { back } = useRouter()
-
   return (
     <header className={className}>
       {backButton && (
-        <Button onClick={back} size="icon" variant="secondary">
-          <ChevronLeftIcon className="size-6" />
-        </Button>
+        <Link href={"/"}>
+          <Button size="icon" variant="secondary">
+            <ChevronLeftIcon className="size-6" />
+          </Button>
+        </Link>
       )}
       <Image
         src={logo}
