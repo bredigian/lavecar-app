@@ -27,6 +27,8 @@ export const GeneratePayment = ({ disabled, reserve }: TProps) => {
     .setLocale("es-AR")
 
   const handleGeneratePayment = async () => {
+    if (disabled) return
+
     setSubmitting(true)
 
     const body: TPreferenceBody = {
@@ -69,7 +71,7 @@ export const GeneratePayment = ({ disabled, reserve }: TProps) => {
   return (
     <Button
       disabled={submitting || disabled}
-      onClick={handleGeneratePayment}
+      onClick={!disabled ? () => handleGeneratePayment() : () => null}
       className="w-full space-x-2"
     >
       {!submitting ? (

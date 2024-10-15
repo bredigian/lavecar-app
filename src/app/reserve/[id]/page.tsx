@@ -5,6 +5,10 @@ import {
   TReserve,
 } from "@/types/reserves.types"
 import { cn, toReserveOfNumberToString } from "@/lib/utils"
+import {
+  getReserveDetail,
+  handlePaymentStatusById,
+} from "@/services/reserves.service"
 
 import { Button } from "@/components/ui/button"
 import { DateTime } from "luxon"
@@ -12,7 +16,7 @@ import { GeneratePayment } from "@/sections/payment-reserve"
 import Link from "next/link"
 import Screen from "@/components/ui/screen"
 import Title from "@/components/ui/title"
-import { getReserveDetail } from "@/services/reserves.service"
+import { verifyStatusById } from "@/services/payments.service"
 
 type TParam = {
   id: TReserve["id"]
@@ -20,9 +24,14 @@ type TParam = {
 
 type TProps = {
   params: TParam
+  searchParams: {
+    preference_id: string
+    payment_id: string
+    status: PAYMENT_STATUS
+  }
 }
 
-export default async function Reserve({ params }: TProps) {
+export default async function Reserve({ params, searchParams }: TProps) {
   const { id } = params
   const detail = await getReserveDetail(id)
 
@@ -43,6 +52,20 @@ export default async function Reserve({ params }: TProps) {
         </Link>
       </Screen>
     )
+
+  const { payment_id } = searchParams
+
+  if (payment_id) {
+    if (payment_id !== "null") {
+      const data = await verifyStatusById(payment_id)
+      if (!(data instanceof Error)) {
+        const { status } = data
+        const STATUS = status?.toUpperCase() as keyof typeof PAYMENT_STATUS
+        if (STATUS !== detail.payment_status)
+          await handlePaymentStatusById(detail.id, payment_id, STATUS)
+      }
+    }
+  }
 
   const date = DateTime.fromISO(detail.date as string)
     .setZone("America/Argentina/Buenos_Aires")

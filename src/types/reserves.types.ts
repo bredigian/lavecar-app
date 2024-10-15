@@ -20,6 +20,7 @@ export type TReserve = {
   user_phone: string
   status: keyof typeof RESERVE_STATUS
   payment_status: keyof typeof PAYMENT_STATUS
+  payment_id: string
   created_at?: Date
   updated_at?: Date
 }
