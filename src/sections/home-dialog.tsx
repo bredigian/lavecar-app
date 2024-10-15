@@ -1,5 +1,6 @@
 import {
   AlertDialog,
+  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogHeader,
@@ -19,6 +20,7 @@ import {
 
 import { Button } from "@/components/ui/button"
 import { HaveReserveForm } from "./reserve-form"
+import Map from "@/components/map"
 
 export const HaveReserveDialog = () => {
   return (
@@ -58,9 +60,11 @@ export const WhereWeAreDialog = () => {
         <AlertDialogHeader>
           <AlertDialogTitle>Dónde estamos</AlertDialogTitle>
           <AlertDialogDescription>
-            Acá va una imágen del mapa con la dirección.
+            Calle 14 1200, La Plata, Buenos Aires, Argentina
           </AlertDialogDescription>
         </AlertDialogHeader>
+        <Map height="h-96" />
+        <AlertDialogCancel>Cerrar</AlertDialogCancel>
       </AlertDialogContent>
     </AlertDialog>
   )

@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button"
 import { DateTime } from "luxon"
 import { GeneratePayment } from "@/sections/payment-reserve"
 import Link from "next/link"
+import Map from "@/components/map"
 import Screen from "@/components/ui/screen"
 import Title from "@/components/ui/title"
 import { verifyStatusById } from "@/services/payments.service"
@@ -73,7 +74,7 @@ export default async function Reserve({ params, searchParams }: TProps) {
 
   const isPayed = detail.payment_status === "APPROVED"
   return (
-    <Screen className="gap-8">
+    <Screen style={{ minHeight: `calc(100svh - 69px` }} className="gap-8">
       <section className="flex items-center w-full justify-between">
         <Title>
           ¡Turno #{toReserveOfNumberToString(detail.number)}
@@ -120,6 +121,7 @@ export default async function Reserve({ params, searchParams }: TProps) {
         </span>{" "}
         en la siguiente ubicación:
       </p>
+      <Map />
     </Screen>
   )
 }

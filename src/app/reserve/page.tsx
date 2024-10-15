@@ -8,7 +8,7 @@ export default async function Reserve() {
   const weekdays = await getAllWithAssignedReserves()
 
   return (
-    <Screen style={{ minHeight: `calc(100svh - 68px` }} className="gap-8">
+    <Screen style={{ minHeight: `calc(100svh - 69px` }} className="gap-8">
       <section className="space-y-4">
         <Title>Reservar</Title>
         <Paragraph>
