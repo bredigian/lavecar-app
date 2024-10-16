@@ -287,13 +287,12 @@ export const ReserveForm = ({ weekdays }: TProps) => {
           <Label>Email</Label>
           <Input
             {...register("user_email", {
-              required: { value: true, message: "El email es requerido." },
               pattern: {
                 value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                 message: "El email no es válido.",
               },
             })}
-            placeholder="ejemplo@gmail.com"
+            placeholder="(opcional) ejemplo@gmail.com"
           />
         </div>
         {errors?.user_email && (

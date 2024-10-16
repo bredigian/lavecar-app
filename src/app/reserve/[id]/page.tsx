@@ -97,7 +97,9 @@ export default async function Reserve({ params, searchParams }: TProps) {
               {date.toLocaleString(DateTime.DATETIME_MED_WITH_WEEKDAY)}
             </li>
             <li className="text-sm">{detail.user_name}</li>
-            <li className="text-sm">{detail.user_email}</li>
+            {detail.user_email && (
+              <li className="text-sm">{detail.user_email}</li>
+            )}
             <li className="text-sm">{detail.user_phone}</li>
           </ul>
           <div className="flex flex-col items-end gap-3">
