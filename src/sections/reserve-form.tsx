@@ -142,8 +142,8 @@ export const ReserveForm = ({ weekdays }: TProps) => {
     }
 
     try {
-      const { id } = await reserve(payload)
-      push(`/reserve/${id}`)
+      const { id, whatsapp_message_status } = await reserve(payload)
+      push(`/reserve/${id}?message_status=${whatsapp_message_status}`)
     } catch (e) {
       if (e instanceof Error)
         toast.error("Ocurrió un problema al reservar el turno.")

@@ -29,6 +29,7 @@ type TProps = {
     preference_id: string
     payment_id: string
     status: PAYMENT_STATUS
+    message_status: string
   }
 }
 
@@ -54,7 +55,7 @@ export default async function Reserve({ params, searchParams }: TProps) {
       </Screen>
     )
 
-  const { payment_id } = searchParams
+  const { payment_id, message_status } = searchParams
 
   if (payment_id) {
     if (payment_id !== "null") {
@@ -84,8 +85,9 @@ export default async function Reserve({ params, searchParams }: TProps) {
         <CheckCircledIcon className="size-16" />
       </section>
       <p className="text-sm">
-        Enviamos un correo y un mensaje por WhatsApp con los datos de la
-        reserva.
+        {Number(message_status) === 200
+          ? "Enviamos un mensaje por WhatsApp con los datos de la reserva."
+          : "Tené en cuenta el numero de reserva indicado arriba para una futura búsqueda del turno."}
       </p>
       <section className="flex flex-col gap-4 w-full">
         <h2 className="font-semibold">Resumen</h2>

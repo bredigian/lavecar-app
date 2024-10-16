@@ -23,4 +23,6 @@ export type TReserve = {
   payment_id: string
   created_at?: Date
   updated_at?: Date
+
+  whatsapp_message_status?: number
 }
