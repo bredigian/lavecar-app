@@ -169,7 +169,10 @@ export const ReserveForm = ({ weekdays }: TProps) => {
               selected={field.value as Date}
               onSelect={field.onChange}
               className="rounded-md border w-fit place-self-center"
-              onMonthChange={(value) => setMonth(value)}
+              onMonthChange={(value) => {
+                const isPast = value.getTime() < Date.now()
+                setMonth(!isPast ? value : new Date())
+              }}
               onDayClick={(value) => {
                 const date = DateTime.fromJSDate(value)
                 const day = weekdays.find(
@@ -178,6 +181,8 @@ export const ReserveForm = ({ weekdays }: TProps) => {
                 setAssignedReservesOfDay(day?.reserves as TReserve[])
                 setWorkhoursOfDay(day?.workhours as TWorkhour[])
               }}
+              fromMonth={DateTime.now().toJSDate()}
+              toMonth={DateTime.now().plus({ months: 1 }).toJSDate()}
               disabled={[
                 ...disabledDates.map((item) => new Date(item)),
                 {
