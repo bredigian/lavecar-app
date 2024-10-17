@@ -22,6 +22,7 @@ import { ReloadIcon } from "@radix-ui/react-icons"
 import { TReserve } from "@/types/reserves.types"
 import { TWeekdayWithAssignedReserves } from "@/types/weekdays.types"
 import { TWorkhour } from "@/types/workhours.types"
+import revalidate from "@/lib/actions"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 
@@ -143,6 +144,7 @@ export const ReserveForm = ({ weekdays }: TProps) => {
 
     try {
       const { id, whatsapp_message_status } = await reserve(payload)
+      await revalidate("assigned_reserves")
       push(`/reserve/${id}?message_status=${whatsapp_message_status}`)
     } catch (e) {
       if (e instanceof Error)

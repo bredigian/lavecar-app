@@ -25,6 +25,7 @@ export const getReserveDetail = async (
 ) => {
   const options: RequestInit = {
     method: "GET",
+    next: { tags: [`reserve_${id}`] },
   }
   const PATH = `${API_URL}/v1/reserves/detail${
     typeof id === "string" ? `?id=${id}` : `?number=${id}`

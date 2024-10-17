@@ -7,6 +7,16 @@ import { getAllWithAssignedReserves } from "@/services/weekdays.service"
 export default async function Reserve() {
   const weekdays = await getAllWithAssignedReserves()
 
+  if (weekdays instanceof Error)
+    return (
+      <Screen style={{ minHeight: `calc(100svh - 69px` }} className="gap-8">
+        <section className="space-y-4">
+          <Title>Reservar</Title>
+          <Paragraph>{weekdays.message}</Paragraph>
+        </section>
+      </Screen>
+    )
+
   return (
     <Screen style={{ minHeight: `calc(100svh - 69px` }} className="gap-8">
       <section className="space-y-4">
