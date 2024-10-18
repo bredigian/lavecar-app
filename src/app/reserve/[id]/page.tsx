@@ -17,7 +17,6 @@ import Link from "next/link"
 import Map from "@/components/map"
 import Screen from "@/components/ui/screen"
 import Title from "@/components/ui/title"
-import revalidate from "@/lib/actions"
 import { verifyStatusById } from "@/services/payments.service"
 
 type TParam = {
@@ -64,11 +63,8 @@ export default async function Reserve({ params, searchParams }: TProps) {
       if (!(data instanceof Error)) {
         const { status } = data
         const STATUS = status?.toUpperCase() as keyof typeof PAYMENT_STATUS
-        if (STATUS !== detail.payment_status) {
+        if (STATUS !== detail.payment_status)
           await handlePaymentStatusById(detail.id, payment_id, STATUS)
-          await revalidate(`reserve_${detail.id}`)
-          await revalidate(`payment_${payment_id}`)
-        }
       }
     }
   }
@@ -121,7 +117,11 @@ export default async function Reserve({ params, searchParams }: TProps) {
           </div>
         </div>
       </section>
-      <GeneratePayment disabled={isPayed} reserve={detail} />
+      <GeneratePayment
+        disabled={isPayed}
+        reserve={detail}
+        paymentId={payment_id}
+      />
       <p className="text-sm">
         Deberias entregar el vehículo a las{" "}
         <span className="font-semibold">

@@ -1,5 +1,7 @@
 "use client"
 
+import { generatePayment, verifyStatusById } from "@/services/payments.service"
+
 import { Button } from "@/components/ui/button"
 import CreditCard from "@/components/icons/credit-card"
 import { DateTime } from "luxon"
@@ -7,7 +9,6 @@ import { ReloadIcon } from "@radix-ui/react-icons"
 import { SECURE_API_URL } from "@/const/api"
 import { TPreferenceBody } from "@/types/payments.types"
 import { TReserve } from "@/types/reserves.types"
-import { generatePayment } from "@/services/payments.service"
 import { toast } from "sonner"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
@@ -15,10 +16,12 @@ import { useState } from "react"
 type TProps = {
   disabled: boolean
   reserve: TReserve
+  paymentId?: string
 }
 
-export const GeneratePayment = ({ disabled, reserve }: TProps) => {
-  const { id, user_email, date, user_name, user_phone } = reserve
+export const GeneratePayment = ({ disabled, reserve, paymentId }: TProps) => {
+  const { id, user_email, date, user_name, user_phone, payment_status } =
+    reserve
   const [submitting, setSubmitting] = useState(false)
   const pathname = usePathname()
 
@@ -30,6 +33,23 @@ export const GeneratePayment = ({ disabled, reserve }: TProps) => {
     if (disabled) return
 
     setSubmitting(true)
+
+    if (paymentId) {
+      try {
+        const { status } = (await verifyStatusById(paymentId)) as {
+          status: string
+        }
+
+        if (status.toUpperCase() === "APPROVED") {
+          toast.error("El pago ya fue realizado. Por favor, recargá la página.")
+          setSubmitting(false)
+
+          return
+        }
+      } catch (e) {
+        console.error("Ocurrió un error verificando el pago:", e)
+      }
+    }
 
     const body: TPreferenceBody = {
       auto_return: "all",
@@ -70,8 +90,12 @@ export const GeneratePayment = ({ disabled, reserve }: TProps) => {
 
   return (
     <Button
-      disabled={submitting || disabled}
-      onClick={!disabled ? () => handleGeneratePayment() : () => null}
+      disabled={submitting || disabled || payment_status === "APPROVED"}
+      onClick={
+        !disabled || payment_status !== "APPROVED"
+          ? () => handleGeneratePayment()
+          : () => null
+      }
       className="w-full space-x-2"
     >
       {!submitting ? (

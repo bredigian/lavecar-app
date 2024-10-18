@@ -23,7 +23,7 @@ export const generatePayment = async (body: TPreferenceBody) => {
 export const verifyStatusById = async (id: TReserve["payment_id"]) => {
   const options: RequestInit = {
     method: "GET",
-    next: { tags: [`payment_${id}`] },
+    cache: "no-cache",
   }
   const PATH = `${API_URL}/v1/payments?id=${id}`
   const res = await fetch(PATH, options)
