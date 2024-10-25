@@ -21,8 +21,8 @@ export type TReserve = {
   status: keyof typeof RESERVE_STATUS
   payment_status: keyof typeof PAYMENT_STATUS
   payment_id: string
-  created_at?: Date
-  updated_at?: Date
+  created_at?: Date | string
+  updated_at?: Date | string
 
   whatsapp_message_status?: number
 }

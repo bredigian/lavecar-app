@@ -1,3 +1,4 @@
+import ReserveItem from "./reserve-item"
 import { getReservesOfDate } from "@/services/reserves.service"
 
 type TProps = {
@@ -9,14 +10,12 @@ export default async function ReservesContainer({ date }: TProps) {
 
   if (data instanceof Error) return <span>{data.message}</span>
 
-  console.log(data)
-
-  if (data.length === 0) return <span>No hay reservas para hoy.</span>
+  if (data.length === 0) return <span>No hay reservas</span>
 
   return (
-    <ul>
+    <ul className="flex flex-col gap-8">
       {data.map((reserve) => (
-        <li key={reserve.id}>{reserve.user_name}</li>
+        <ReserveItem key={reserve.id} reserve={reserve} />
       ))}
     </ul>
   )
