@@ -4,7 +4,7 @@ import { TError } from "@/types/errors.types"
 import { TUser } from "@/types/auth.types"
 import { TUserdata } from "@/store/user.store"
 
-type TData = {
+export type TAuthData = {
   token_id: string
   expires_in: Date | ISOStringFormat
   userdata: TUserdata
@@ -22,7 +22,7 @@ export const signin = async (payload: TUser) => {
   const data = await res.json()
   if (!res.ok) throw new Error((data as TError).message)
 
-  return data as TData
+  return data as TAuthData
 }
 
 export const verifySession = async (token_id: string) => {
@@ -38,5 +38,5 @@ export const verifySession = async (token_id: string) => {
   const data = await res.json()
   if (!res.ok) return new Error((data as TError).message)
 
-  return data as TData
+  return data as TAuthData
 }

@@ -12,10 +12,17 @@ export default async function AdminDashboard() {
   const data = await verifySession(token_id.value)
 
   if (data instanceof Error)
-    redirect(`/?session=${token_id.value}&expired=true`, RedirectType.push)
+    redirect(
+      `/?session=${token_id.value}&expired=true&message=${data.message}`,
+      RedirectType.push
+    )
 
   return (
-    <Screen style={{ minHeight: `calc(100svh - 69px` }} className="items-start">
+    <Screen
+      style={{ minHeight: `calc(100svh - 69px` }}
+      className="items-start"
+      authData={data}
+    >
       <DashboardHome />
     </Screen>
   )
