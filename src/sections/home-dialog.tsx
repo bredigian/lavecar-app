@@ -18,6 +18,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer"
 
+import { AuthForm } from "./auth-form"
 import { Button } from "@/components/ui/button"
 import { HaveReserveForm } from "./reserve-form"
 import Map from "@/components/map"
@@ -65,6 +66,22 @@ export const WhereWeAreDialog = () => {
         </AlertDialogHeader>
         <Map height="h-96" />
         <AlertDialogCancel>Cerrar</AlertDialogCancel>
+      </AlertDialogContent>
+    </AlertDialog>
+  )
+}
+
+export const AuthAsAdminDialog = () => {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button variant="secondary">Iniciar sesión como Admin.</Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Autenticación</AlertDialogTitle>
+        </AlertDialogHeader>
+        <AuthForm />
       </AlertDialogContent>
     </AlertDialog>
   )
