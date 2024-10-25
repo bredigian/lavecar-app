@@ -59,3 +59,14 @@ export const handlePaymentStatusById = async (
 
   return data as TReserve
 }
+
+export const getReservesOfDate = async (date: Date) => {
+  const options: RequestInit = { method: "GET" }
+  const PATH = `${API_URL}/v1/reserves?date=${date}`
+
+  const res = await fetch(PATH, options)
+  const data = await res.json()
+  if (!res.ok) return new Error((data as TError).message)
+
+  return data as TReserve[]
+}

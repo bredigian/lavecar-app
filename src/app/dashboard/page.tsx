@@ -1,7 +1,7 @@
 import { RedirectType, redirect } from "next/navigation"
 
+import DashboardHome from "@/sections/dashboard-home"
 import Screen from "@/components/ui/screen"
-import Title from "@/components/ui/title"
 import { cookies } from "next/headers"
 import { verifySession } from "@/services/auth.service"
 
@@ -15,8 +15,8 @@ export default async function AdminDashboard() {
     redirect(`/?session=${token_id.value}&expired=true`, RedirectType.push)
 
   return (
-    <Screen style={{ minHeight: `calc(100svh - 69px` }}>
-      <Title>Admin dashboard</Title>
+    <Screen style={{ minHeight: `calc(100svh - 69px` }} className="items-start">
+      <DashboardHome />
     </Screen>
   )
 }
