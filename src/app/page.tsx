@@ -1,23 +1,21 @@
-import {
-  AuthAsAdminDialog,
-  HaveReserveDialog,
-  WhereWeAreDialog,
-} from "@/sections/home-dialog"
+import { HaveReserveDialog, WhereWeAreDialog } from "@/sections/home-dialog"
 
+import AdminAccess from "@/sections/home-admin"
 import { Button } from "@/components/ui/button"
 import Header from "@/components/header"
 import Link from "next/link"
 import Screen from "@/components/ui/screen"
+import { Skeleton } from "@/components/ui/skeleton"
+import { Suspense } from "react"
 
-type TProps = {
-  searchParams: {
-    token_id: string
-    expired: string
-  }
-}
+// type TProps = {
+//   searchParams: {
+//     token_id: string
+//     expired: string
+//   }
+// }
 
-export default function Home({ searchParams }: TProps) {
-  console.log(searchParams)
+export default async function Home() {
   return (
     <Screen className="h-dvh justify-center gap-8">
       <div className="flex flex-col items-center gap-8 grow justify-center">
@@ -32,7 +30,9 @@ export default function Home({ searchParams }: TProps) {
           <WhereWeAreDialog />
         </section>
       </div>
-      <AuthAsAdminDialog />
+      <Suspense fallback={<Skeleton className="w-52 h-9" />}>
+        <AdminAccess />
+      </Suspense>
     </Screen>
   )
 }
