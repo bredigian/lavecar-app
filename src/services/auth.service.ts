@@ -39,3 +39,17 @@ export const verifySession = async (token: string) => {
 
   return data as TAuthData
 }
+
+export const signout = async (token: string) => {
+  const options: RequestInit = {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${token}` },
+  }
+  const PATH = `${API_URL}/v1/auth/session`
+
+  const res = await fetch(PATH, options)
+  const data = await res.json()
+  if (!res.ok) throw new Error((data as TError).message)
+
+  return { ok: true }
+}

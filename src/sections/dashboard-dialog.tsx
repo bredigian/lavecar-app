@@ -12,16 +12,34 @@ import {
 } from "@/components/ui/drawer"
 
 import { Button } from "@/components/ui/button"
+import Cookies from "js-cookie"
 import { LogOutIcon } from "lucide-react"
+import { signout } from "@/services/auth.service"
+import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 
 export default function SignoutDialog() {
   const [open, setOpen] = useState(false)
+  const { push } = useRouter()
 
   const handleSignout = async () => {
     try {
-      console.log("signout...")
-    } catch (error) {}
+      const access_token = Cookies.get("access_token")
+      if (!access_token) {
+        push("/")
+        return
+      }
+
+      const { ok } = await signout(access_token)
+      if (ok) {
+        Cookies.remove("access_token")
+        toast.success("La sesión se ha cerrado.", { position: "top-center" })
+        push("/")
+      }
+    } catch (e) {
+      if (e instanceof Error) toast.error(e.message)
+    }
   }
 
   return (
@@ -36,7 +54,7 @@ export default function SignoutDialog() {
           <DrawerDescription>¿Estás seguro?</DrawerDescription>
         </DrawerHeader>
         <DrawerFooter className="pt-2">
-          <Button>Salir</Button>
+          <Button onClick={handleSignout}>Salir</Button>
           <DrawerClose asChild>
             <Button variant="outline">Cancelar</Button>
           </DrawerClose>
