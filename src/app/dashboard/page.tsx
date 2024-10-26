@@ -6,14 +6,14 @@ import { cookies } from "next/headers"
 import { verifySession } from "@/services/auth.service"
 
 export default async function AdminDashboard() {
-  const token_id = cookies().get("token_id")
-  if (!token_id) redirect("/", RedirectType.replace)
+  const access_token = cookies().get("access_token")
+  if (!access_token) redirect("/", RedirectType.replace)
 
-  const data = await verifySession(token_id.value)
+  const data = await verifySession(access_token.value)
 
   if (data instanceof Error)
     redirect(
-      `/?session=${token_id.value}&expired=true&message=${data.message}`,
+      `/?session=${access_token.value}&expired=true&message=${data.message}`,
       RedirectType.push
     )
 

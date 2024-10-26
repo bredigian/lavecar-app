@@ -5,7 +5,7 @@ import { TUser } from "@/types/auth.types"
 import { TUserdata } from "@/store/user.store"
 
 export type TAuthData = {
-  token_id: string
+  access_token: string
   expires_in: Date | ISOStringFormat
   userdata: TUserdata
 }
@@ -25,12 +25,11 @@ export const signin = async (payload: TUser) => {
   return data as TAuthData
 }
 
-export const verifySession = async (token_id: string) => {
+export const verifySession = async (token: string) => {
   const options: RequestInit = {
-    method: "POST",
-    body: JSON.stringify({ token_id }),
+    method: "GET",
     headers: {
-      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
   }
   const PATH = `${API_URL}/v1/auth/session`

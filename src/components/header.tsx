@@ -1,16 +1,6 @@
 "use client"
 
 import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "./ui/drawer"
-import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -18,12 +8,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu"
-import { LogOutIcon, User } from "lucide-react"
 
 import { Button } from "./ui/button"
 import { ChevronLeftIcon } from "@radix-ui/react-icons"
 import Image from "next/image"
 import Link from "next/link"
+import SignoutDialog from "@/sections/dashboard-dialog"
+import { User } from "lucide-react"
 import { cn } from "@/lib/utils"
 import logo from "@/assets/logo.png"
 import { userStore } from "@/store/user.store"
@@ -70,26 +61,8 @@ export default function Header({
             </DropdownMenuLabel>
             <small className="pl-2">@{username}</small>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Drawer>
-                <DrawerTrigger className="flex items-center gap-2">
-                  <LogOutIcon size={16} />
-                  Cerrar sesión
-                </DrawerTrigger>
-                <DrawerContent>
-                  <DrawerHeader>
-                    <DrawerTitle>Ya tengo un turno</DrawerTitle>
-                    <DrawerDescription>
-                      A continuación ingrese el número de reserva
-                    </DrawerDescription>
-                  </DrawerHeader>
-                  <DrawerFooter className="pt-2">
-                    <DrawerClose asChild>
-                      <Button variant="outline">Cancelar</Button>
-                    </DrawerClose>
-                  </DrawerFooter>
-                </DrawerContent>
-              </Drawer>
+            <DropdownMenuItem asChild>
+              <SignoutDialog />
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

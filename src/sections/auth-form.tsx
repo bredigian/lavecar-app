@@ -30,9 +30,9 @@ export const AuthForm = () => {
 
   const onSubmit = async (values: TUser) => {
     try {
-      const { token_id, userdata, expires_in } = await signin(values)
+      const { access_token, userdata, expires_in } = await signin(values)
 
-      Cookies.set("token_id", token_id, {
+      Cookies.set("access_token", access_token, {
         expires: DateTime.fromISO(expires_in as string).toJSDate(),
       })
       setUserdata(userdata)

@@ -5,8 +5,8 @@ import { cookies } from "next/headers"
 import { verifySession } from "@/services/auth.service"
 
 export default async function AdminAccess() {
-  const token_id = cookies().get("token_id")
-  const session = token_id ? await verifySession(token_id.value) : null
+  const access_token = cookies().get("access_token")
+  const session = access_token ? await verifySession(access_token.value) : null
 
   if (session === null || session instanceof Error) return <AuthAsAdminDialog />
 
