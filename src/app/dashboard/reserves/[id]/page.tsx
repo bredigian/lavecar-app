@@ -1,5 +1,6 @@
 import {
   Calendar,
+  CalendarCheck,
   CreditCard,
   Hash,
   Phone,
@@ -59,12 +60,20 @@ export default async function AdminReserveDetail({ params }: TProps) {
     .setZone("America/Argentina/Buenos_Aires")
     .setLocale("es-AR")
 
+  const created_at = DateTime.fromISO(detail.created_at as string)
+    .setZone("America/Argentina/Buenos_Aires")
+    .setLocale("es-AR")
+
   return (
     <Screen className="items-start gap-8">
       <h4 className="font-medium flex items-center gap-2 text-xl">
         <Hash className="size-6" />
         <span>{number.toString().padStart(6, "0")}</span>
       </h4>
+      <section className="flex items-center gap-2">
+        <CalendarCheck className="size-6" />
+        <p>Creado el {created_at.toLocaleString(DateTime.DATETIME_SHORT)}</p>
+      </section>
       <article className="flex items-start justify-between w-full">
         <section className="flex flex-col gap-4">
           <div className="font-medium flex items-center gap-2">
