@@ -87,7 +87,9 @@ export default async function AdminReserveDetail({ params }: TProps) {
           )}
         </section>
         <section className="flex flex-col text-4xl bg-black text-white items-end p-2 rounded-xl">
-          <span className="w-fit">{datetime.hour.toString()}</span>
+          <span className="w-fit">
+            {datetime.hour.toString().padStart(2, "0")}
+          </span>
           <span className="w-fit">
             {datetime.minute.toString().padStart(2, "0")}
           </span>
