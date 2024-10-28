@@ -30,7 +30,11 @@ export default function Navbar() {
           key={route.path}
           className={cn(
             "flex flex-col gap-2 items-center min-w-16",
-            pathname === route.path ? "opacity-100" : "opacity-50"
+            pathname === route.path
+              ? "opacity-100"
+              : pathname.includes(route.path) && route.label === "Turnos"
+              ? "opacity-100"
+              : "opacity-50"
           )}
         >
           {route.icon}
