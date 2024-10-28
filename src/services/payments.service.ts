@@ -32,3 +32,22 @@ export const verifyStatusById = async (id: TReserve["payment_id"]) => {
 
   return data as { status: string }
 }
+
+export const handlePaymentStatusById = async (
+  reserve_id: TReserve["id"],
+  payment_status: TReserve["payment_status"],
+  payment_id?: TReserve["payment_id"]
+) => {
+  const options: RequestInit = {
+    method: "PATCH",
+    body: JSON.stringify({ id: reserve_id, payment_id, payment_status }),
+    headers: { "Content-Type": "application/json" },
+  }
+  const PATH = `${API_URL}/v1/payments`
+  const res = await fetch(PATH, options)
+
+  const data: TReserve | TError = await res.json()
+  if (!res.ok) return new Error((data as TError).message)
+
+  return data as TReserve
+}

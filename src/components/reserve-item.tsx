@@ -69,7 +69,7 @@ export default function ReserveItem({ reserve }: TProps) {
           </span>
         </div>
         <Link href={`/dashboard/reserves/${id}`}>
-          <Button size={"icon"} className="">
+          <Button size={"icon"}>
             <ArrowRightIcon size={16} />
           </Button>
         </Link>

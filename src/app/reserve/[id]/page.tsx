@@ -6,9 +6,9 @@ import {
 } from "@/types/reserves.types"
 import { cn, toReserveOfNumberToString } from "@/lib/utils"
 import {
-  getReserveDetail,
   handlePaymentStatusById,
-} from "@/services/reserves.service"
+  verifyStatusById,
+} from "@/services/payments.service"
 
 import { Button } from "@/components/ui/button"
 import { DateTime } from "luxon"
@@ -17,7 +17,7 @@ import Link from "next/link"
 import Map from "@/components/map"
 import Screen from "@/components/ui/screen"
 import Title from "@/components/ui/title"
-import { verifyStatusById } from "@/services/payments.service"
+import { getReserveDetail } from "@/services/reserves.service"
 
 type TParam = {
   id: TReserve["id"]
@@ -64,7 +64,7 @@ export default async function Reserve({ params, searchParams }: TProps) {
         const { status } = data
         const STATUS = status?.toUpperCase() as keyof typeof PAYMENT_STATUS
         if (STATUS !== detail.payment_status)
-          await handlePaymentStatusById(detail.id, payment_id, STATUS)
+          await handlePaymentStatusById(detail.id, STATUS, payment_id)
       }
     }
   }

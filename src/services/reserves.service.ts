@@ -41,25 +41,6 @@ export const getReserveDetail = async (
   return data as TReserve
 }
 
-export const handlePaymentStatusById = async (
-  reserve_id: TReserve["id"],
-  payment_id: TReserve["payment_id"],
-  payment_status: TReserve["payment_status"]
-) => {
-  const options: RequestInit = {
-    method: "PATCH",
-    body: JSON.stringify({ id: reserve_id, payment_id, payment_status }),
-    headers: { "Content-Type": "application/json" },
-  }
-  const PATH = `${API_URL}/v1/reserves`
-  const res = await fetch(PATH, options)
-
-  const data: TReserve | TError = await res.json()
-  if (!res.ok) return new Error((data as TError).message)
-
-  return data as TReserve
-}
-
 export const getReservesOfDate = async (date: Date) => {
   const options: RequestInit = { method: "GET" }
   const PATH = `${API_URL}/v1/reserves?date=${date}`
@@ -69,4 +50,22 @@ export const getReservesOfDate = async (date: Date) => {
   if (!res.ok) return new Error((data as TError).message)
 
   return data as TReserve[]
+}
+
+export const handleStatusById = async (
+  id: TReserve["id"],
+  status: TReserve["status"]
+) => {
+  const options: RequestInit = {
+    method: "PATCH",
+    body: JSON.stringify({ id, status }),
+    headers: { "Content-Type": "application/json" },
+  }
+  const PATH = `${API_URL}/v1/reserves`
+
+  const res = await fetch(PATH, options)
+  const data = await res.json()
+  if (!res.ok) throw new Error((data as TError).message)
+
+  return data as TReserve
 }
