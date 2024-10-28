@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button"
 import { ReloadIcon } from "@radix-ui/react-icons"
 import { TReserve } from "@/types/reserves.types"
 import { handleStatusById } from "@/services/reserves.service"
+import revalidate from "@/lib/actions"
 import { toast } from "sonner"
 import { useState } from "react"
 
@@ -40,6 +41,7 @@ export const HandleReserveStatusDialog = ({
         id,
         actual_status === "PENDING" ? "COMPLETED" : "PENDING"
       )
+      await revalidate("reserves")
       toast.success("Turno completado.")
     } catch (e) {
       if (e instanceof Error) toast.error(e.message)

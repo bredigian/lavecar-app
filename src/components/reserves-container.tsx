@@ -1,3 +1,4 @@
+import { DateTime } from "luxon"
 import ReserveItem from "./reserve-item"
 import { getReservesOfDate } from "@/services/reserves.service"
 
@@ -12,9 +13,15 @@ export default async function ReservesContainer({ date }: TProps) {
 
   if (data.length === 0) return <span>No hay reservas</span>
 
+  const sortedData = data.sort(
+    (a, b) =>
+      DateTime.fromISO(a.date as string).toMillis() -
+      DateTime.fromISO(b.date as string).toMillis()
+  )
+
   return (
     <ul className="flex flex-col gap-8">
-      {data.map((reserve) => (
+      {sortedData.map((reserve) => (
         <ReserveItem key={reserve.id} reserve={reserve} />
       ))}
     </ul>

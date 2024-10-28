@@ -42,7 +42,10 @@ export const getReserveDetail = async (
 }
 
 export const getReservesOfDate = async (date: Date) => {
-  const options: RequestInit = { method: "GET" }
+  const options: RequestInit = {
+    method: "GET",
+    next: { tags: ["reserves"], revalidate: 1800 },
+  }
   const PATH = `${API_URL}/v1/reserves?date=${date}`
 
   const res = await fetch(PATH, options)

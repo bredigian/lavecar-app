@@ -4,6 +4,8 @@ import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { TReserve } from "@/types/reserves.types"
 import { handlePaymentStatusById } from "@/services/payments.service"
+import revalidate from "@/lib/actions"
+import { toast } from "sonner"
 
 type TProps = {
   id: TReserve["id"]
@@ -21,6 +23,8 @@ export default function PaymentStatusSwitch({
   const handlePaymentStatus = async () => {
     try {
       await handlePaymentStatusById(id, !IS_PAYED ? "APPROVED" : "PENDING")
+      await revalidate("reserves")
+      toast.success("Pago actualizado.")
     } catch (e) {
       console.error(e)
     }
