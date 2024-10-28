@@ -8,6 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu"
+import { useParams, useRouter } from "next/navigation"
 
 import { Button } from "./ui/button"
 import { ChevronLeftIcon } from "@radix-ui/react-icons"
@@ -17,7 +18,6 @@ import SignoutDialog from "@/sections/dashboard-dialog"
 import { User } from "lucide-react"
 import { cn } from "@/lib/utils"
 import logo from "@/assets/logo.png"
-import { useParams } from "next/navigation"
 import { userStore } from "@/store/user.store"
 
 type TProps = {
@@ -35,17 +35,28 @@ export default function Header({
 }: TProps) {
   const { first_name, last_name, username } = userStore()
   const { id } = useParams()
+  const { back } = useRouter()
 
   return (
     <header className={className}>
-      {backButton ||
-        (id && (
+      {id ? (
+        <Button
+          onClick={back}
+          size="icon"
+          variant={id ? "default" : "secondary"}
+        >
+          <ChevronLeftIcon className="size-6" />
+        </Button>
+      ) : (
+        backButton && (
           <Link href={id ? "/dashboard/reserves" : "/"}>
             <Button size="icon" variant={id ? "default" : "secondary"}>
               <ChevronLeftIcon className="size-6" />
             </Button>
           </Link>
-        ))}
+        )
+      )}
+
       <Image
         src={logo}
         alt="Logo de LaveCAR"
