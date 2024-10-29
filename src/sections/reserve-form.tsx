@@ -57,15 +57,11 @@ export const ReserveForm = ({ weekdays }: TProps) => {
   const [workhoursOfDay, setWorkhoursOfDay] = useState<TWorkhour[]>([])
 
   useEffect(() => {
-    const selectedDate = DateTime.fromJSDate(month)
-    const selectedDatePlusSevenDays = selectedDate.plus({ days: 7 })
+    const selectedDate = DateTime.fromJSDate(month).set({ hour: 0, minute: 0 })
+    const lastDateOfMonth = selectedDate.endOf("month")
 
     const dates = []
-    for (
-      let index = selectedDate.day;
-      index <= selectedDatePlusSevenDays.day;
-      index++
-    ) {
+    for (let index = selectedDate.day; index <= lastDateOfMonth.day; index++) {
       const date = DateTime.local(
         selectedDate.year,
         selectedDate.month,
@@ -144,11 +140,10 @@ export const ReserveForm = ({ weekdays }: TProps) => {
 
     try {
       const { id, whatsapp_message_status } = await reserve(payload)
-      await revalidate("assigned_reserves")
+      await revalidate("reserves")
       push(`/reserve/${id}?message_status=${whatsapp_message_status}`)
     } catch (e) {
-      if (e instanceof Error)
-        toast.error("Ocurrió un problema al reservar el turno.")
+      if (e instanceof Error) toast.error(e.message)
     }
   }
 
