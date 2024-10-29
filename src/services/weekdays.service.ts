@@ -18,7 +18,7 @@ import { TWeekdayWithAssignedReserves } from "@/types/weekdays.types"
 export const getAllWithAssignedReserves = async () => {
   const options: RequestInit = {
     method: "GET",
-    next: { tags: ["reserves"] },
+    next: { tags: ["reserves", "workhours"] },
   }
   const PATH = `${API_URL}/v1/weekdays/unavailable-workhours`
 
