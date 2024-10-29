@@ -2,7 +2,7 @@ import { RedirectType, redirect } from "next/navigation"
 
 import Paragraph from "@/components/ui/paragraph"
 import Screen from "@/components/ui/screen"
-import { Skeleton } from "@/components/ui/skeleton"
+import { SkeletonWorkhoursContainer } from "@/components/skeletons"
 import { Suspense } from "react"
 import Title from "@/components/ui/title"
 import WorkhoursContainer from "@/components/workhours-container"
@@ -28,7 +28,7 @@ export default async function DashboardWorkhours() {
           Administra los horarios de trabajo por día semanal
         </Paragraph>
       </section>
-      <Suspense fallback={<Skeleton className="w-64 h-4" />}>
+      <Suspense fallback={<SkeletonWorkhoursContainer />}>
         <WorkhoursContainer />
       </Suspense>
     </Screen>
