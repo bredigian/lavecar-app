@@ -23,7 +23,7 @@ export default function Navbar() {
   const pathname = usePathname()
 
   return (
-    <nav className="fixed bottom-0 flex items-center w-full justify-center gap-12 py-4">
+    <nav className="sticky z-50 bottom-0 flex items-center w-full justify-center gap-12 py-4 bg-white text-primary">
       {ROUTES.map((route) => (
         <Link
           href={route.path}

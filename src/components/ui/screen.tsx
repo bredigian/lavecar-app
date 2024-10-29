@@ -27,7 +27,7 @@ export default function Screen({
 
   return (
     <main
-      className={cn("flex flex-col items-center p-8", className)}
+      className={cn("flex flex-col items-center px-8 pb-8", className)}
       style={style}
     >
       {children}

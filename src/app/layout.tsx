@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={cn("antialiased min-h-dvh", GeistSans.className)}>
+      <body className={cn("antialiased", GeistSans.className)}>
         {children}
         <Toaster theme="system" />
       </body>

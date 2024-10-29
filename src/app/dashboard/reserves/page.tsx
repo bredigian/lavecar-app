@@ -35,7 +35,11 @@ export default async function DashboardReserves({ searchParams }: TProps) {
       .toISODate()
 
   return (
-    <Screen className="items-start gap-6" authData={data}>
+    <Screen
+      style={{ minHeight: "calc(100svh - 184px)" }}
+      className="items-start gap-6"
+      authData={data}
+    >
       <section className="space-y-4">
         <Title>Turnos</Title>
         <Paragraph>Filtrá los turnos por día seleccionado</Paragraph>

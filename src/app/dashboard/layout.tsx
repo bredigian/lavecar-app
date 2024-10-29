@@ -10,7 +10,7 @@ export default function AdminLayout({ children }: TProps) {
   return (
     <>
       <Header
-        className="pt-8 px-8 flex items-center w-full justify-between"
+        className="p-8 z-50 flex items-center w-full justify-between sticky top-0 bg-white"
         logoSize="h-6"
         isForAdmin
       />

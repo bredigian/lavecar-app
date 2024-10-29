@@ -19,7 +19,7 @@ export default async function AdminDashboard() {
 
   return (
     <Screen
-      style={{ minHeight: `calc(100svh - 69px` }}
+      style={{ minHeight: `calc(100svh - 184px` }}
       className="items-start"
       authData={data}
     >
