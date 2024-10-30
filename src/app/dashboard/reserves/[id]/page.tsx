@@ -65,7 +65,10 @@ export default async function AdminReserveDetail({ params }: TProps) {
     .setLocale("es-AR")
 
   return (
-    <Screen className="items-start gap-8">
+    <Screen
+      style={{ minHeight: "calc(100svh - 184px)" }}
+      className="items-start gap-8"
+    >
       <h4 className="font-medium flex items-center gap-2 text-xl">
         <Hash className="size-6" />
         <span>{number.toString().padStart(6, "0")}</span>
