@@ -14,6 +14,7 @@ import {
 import { Button } from "@/components/ui/button"
 import Cookies from "js-cookie"
 import { LogOutIcon } from "lucide-react"
+import revalidate from "@/lib/actions"
 import { signout } from "@/services/auth.service"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
@@ -35,6 +36,7 @@ export default function SignoutDialog() {
       if (ok) {
         Cookies.remove("access_token")
         toast.success("La sesión se ha cerrado.", { position: "top-center" })
+        await revalidate("session")
         push("/")
       }
     } catch (e) {

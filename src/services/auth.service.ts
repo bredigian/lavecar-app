@@ -31,6 +31,7 @@ export const verifySession = async (token: string) => {
     headers: {
       Authorization: `Bearer ${token}`,
     },
+    next: { tags: ["session"], revalidate: 3600 },
   }
   const PATH = `${API_URL}/v1/auth/session`
   const res = await fetch(PATH, options)

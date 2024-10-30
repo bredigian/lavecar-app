@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { TUser } from "@/types/auth.types"
 import { cn } from "@/lib/utils"
+import revalidate from "@/lib/actions"
 import { signin } from "@/services/auth.service"
 import { toast } from "sonner"
 import { useForm } from "react-hook-form"
@@ -38,6 +39,8 @@ export const AuthForm = () => {
         expires: DateTime.fromISO(expires_in as string).toJSDate(),
       })
       setUserdata(userdata)
+
+      await revalidate("session")
 
       push("/dashboard")
     } catch (e) {
