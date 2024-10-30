@@ -18,7 +18,7 @@ export default async function Reserve() {
     )
 
   return (
-    <Screen style={{ minHeight: `calc(100svh - 69px` }} className="gap-8">
+    <Screen style={{ minHeight: `calc(100svh - 69px` }} className="gap-8 pt-8">
       <section className="space-y-4">
         <Title>Reservar</Title>
         <Paragraph>

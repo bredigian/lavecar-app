@@ -76,7 +76,7 @@ export default async function Reserve({ params, searchParams }: TProps) {
 
   const isPayed = detail.payment_status === "APPROVED"
   return (
-    <Screen style={{ minHeight: `calc(100svh - 69px` }} className="gap-8">
+    <Screen style={{ minHeight: `calc(100svh - 69px` }} className="gap-8 pt-8">
       <section className="flex items-center w-full justify-between">
         <Title>
           ¡Turno #{toReserveOfNumberToString(detail.number)}
