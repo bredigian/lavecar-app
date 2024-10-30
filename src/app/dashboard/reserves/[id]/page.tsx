@@ -77,28 +77,28 @@ export default async function AdminReserveDetail({ params }: TProps) {
         <CalendarCheck className="size-6" />
         <p>Creado el {created_at.toLocaleString(DateTime.DATETIME_SHORT)}</p>
       </section>
-      <article className="flex items-start justify-between w-full">
+      <article className="flex items-center justify-between w-full">
         <section className="flex flex-col gap-4">
-          <div className="font-medium flex items-center gap-2">
+          <div className="flex items-center gap-2">
             <UserIcon className="size-6" />
             <span>{user_name}</span>
           </div>
-          <div className="font-medium flex items-center gap-2">
+          <div className="flex items-center gap-2">
             <Calendar className="size-6" />
             <span>{datetime.toLocaleString(DateTime.DATE_FULL)}</span>
           </div>
-          <div className="font-medium flex items-center gap-2">
+          <div className="flex items-center gap-2">
             <Phone className="size-6" />
             <span>{user_phone}</span>
           </div>
           {user_email && (
-            <div className="font-medium flex items-center gap-2">
+            <div className="flex items-center gap-2">
               <SendHorizonal className="size-6" />
               <span>{user_email}</span>
             </div>
           )}
         </section>
-        <section className="flex flex-col text-4xl bg-black text-white items-end p-2 rounded-xl">
+        <section className="flex flex-col text-6xl items-end rounded-xl">
           <span className="w-fit">
             {datetime.hour.toString().padStart(2, "0")}
           </span>
@@ -108,7 +108,7 @@ export default async function AdminReserveDetail({ params }: TProps) {
         </section>
       </article>
       <section className="flex items-center justify-between w-full">
-        <div className="font-medium flex items-center gap-2">
+        <div className="flex items-center gap-2">
           <CreditCard className="size-6" />
           <span>Estado de pago</span>
         </div>
