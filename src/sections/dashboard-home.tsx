@@ -29,7 +29,7 @@ export default function DashboardHome() {
       </CardHeader>
       <CardContent>
         <Suspense fallback={<Skeleton className="w-full h-4" />}>
-          <ReservesContainer date={today.toJSDate()} />
+          <ReservesContainer date={today.toJSDate()} isHome />
         </Suspense>
       </CardContent>
       <CardFooter>
