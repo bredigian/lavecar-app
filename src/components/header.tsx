@@ -8,6 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu"
+import { HomeIcon, User } from "lucide-react"
 import { useParams, useRouter } from "next/navigation"
 
 import { Button } from "./ui/button"
@@ -15,7 +16,6 @@ import { ChevronLeftIcon } from "@radix-ui/react-icons"
 import Image from "next/image"
 import Link from "next/link"
 import SignoutDialog from "@/sections/dashboard-dialog"
-import { User } from "lucide-react"
 import { cn } from "@/lib/utils"
 import logo from "@/assets/logo.png"
 import { userStore } from "@/store/user.store"
@@ -74,6 +74,16 @@ export default function Header({
               {first_name} {last_name}
             </DropdownMenuLabel>
             <small className="pl-2">@{username}</small>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem asChild>
+              <Link
+                href={"/"}
+                className="flex items-center gap-2 px-2 py-1 w-full"
+              >
+                <HomeIcon size={16} />
+                <span className="text-sm">Ir al Inicio</span>
+              </Link>
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
               <SignoutDialog />

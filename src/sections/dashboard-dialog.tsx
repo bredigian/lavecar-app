@@ -44,7 +44,7 @@ export default function SignoutDialog() {
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger className="flex items-center gap-2 px-2 py-1">
+      <DrawerTrigger className="flex items-center gap-2 px-2 py-1.5">
         <LogOutIcon size={16} />
         <span className="text-sm">Cerrar sesión</span>
       </DrawerTrigger>
