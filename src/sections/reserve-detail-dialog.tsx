@@ -37,12 +37,16 @@ export const HandleReserveStatusDialog = ({
   const handleState = async () => {
     setSubmitting(true)
     try {
-      await handleStatusById(
+      const { whatsapp_message_status } = await handleStatusById(
         id,
         actual_status === "PENDING" ? "COMPLETED" : "PENDING"
       )
       await revalidate("reserves")
-      toast.success("Turno completado.")
+      toast.success(
+        whatsapp_message_status === 200
+          ? "Se le envió un mensaje por WhatsApp al cliente."
+          : "Turno completado."
+      )
     } catch (e) {
       if (e instanceof Error) toast.error(e.message)
     }
