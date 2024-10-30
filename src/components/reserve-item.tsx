@@ -32,6 +32,7 @@ export default function ReserveItem({ reserve }: TProps) {
 
   const isPayed = payment_status === "APPROVED"
   const isDone = status === "COMPLETED"
+  const isPast = date.toMillis() < DateTime.now().toMillis()
 
   return (
     <li key={reserve.id} className="flex flex-col gap-2">
@@ -41,8 +42,8 @@ export default function ReserveItem({ reserve }: TProps) {
       </div>
       <section className="flex items-center w-full justify-between">
         <span className="font-medium">{user_name}</span>
-        <span className="font-medium text-xl">
-          {date.toLocaleString(DateTime.TIME_24_SIMPLE)}hs
+        <span className={cn("font-medium text-xl", isPast && "line-through")}>
+          {date.toLocaleString(DateTime.TIME_24_SIMPLE)}
         </span>
       </section>
       <section className="flex items-center w-full gap-2 justify-between">
