@@ -13,7 +13,11 @@ export type TAuthData = {
 export const signin = async (payload: TUser) => {
   const options: RequestInit = {
     method: "POST",
-    body: JSON.stringify({ ...payload, username: payload.user_name }),
+    body: JSON.stringify({
+      ...payload,
+      username: payload.user_name,
+      user_name: undefined,
+    }),
     headers: { "Content-Type": "application/json" },
   }
   const PATH = `${API_URL}/v1/auth`

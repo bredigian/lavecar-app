@@ -46,7 +46,7 @@ export const getReservesOfDate = async (date: Date) => {
     method: "GET",
     next: { tags: ["reserves"], revalidate: 1800 },
   }
-  const PATH = `${API_URL}/v1/reserves?date=${date}`
+  const PATH = `${API_URL}/v1/reserves?date=${date.toISOString()}`
 
   const res = await fetch(PATH, options)
   const data = await res.json()

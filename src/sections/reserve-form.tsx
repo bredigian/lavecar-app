@@ -136,6 +136,7 @@ export const ReserveForm = ({ weekdays }: TProps) => {
       date,
       status: "PENDING",
       payment_status: "PENDING",
+      user_email: values.user_email || undefined,
     }
 
     try {
