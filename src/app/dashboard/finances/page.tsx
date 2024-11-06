@@ -1,12 +1,15 @@
 import { RedirectType, redirect } from "next/navigation"
 
-import DashboardHome from "@/sections/dashboard-home"
-import DashboardIncomes from "@/sections/dashboard-incomes"
+import IncomesContainer from "@/components/incomes-container"
+import Paragraph from "@/components/ui/paragraph"
 import Screen from "@/components/ui/screen"
+import { Skeleton } from "@/components/ui/skeleton"
+import { Suspense } from "react"
+import Title from "@/components/ui/title"
 import { cookies } from "next/headers"
 import { verifySession } from "@/services/auth.service"
 
-export default async function AdminDashboard() {
+export default async function Finaces() {
   const access_token = cookies().get("access_token")
   if (!access_token) redirect("/", RedirectType.replace)
 
@@ -20,12 +23,15 @@ export default async function AdminDashboard() {
 
   return (
     <Screen
-      style={{ minHeight: `calc(100svh - 184px` }}
-      className="items-start gap-8"
+      style={{ minHeight: "calc(100svh - 184px)" }}
+      className="items-start"
       authData={data}
     >
-      <DashboardHome />
-      <DashboardIncomes />
+      <Title>Ingresos</Title>
+      <Paragraph>En esta pantalla verás el historial de ingresos.</Paragraph>
+      <Suspense fallback={<Skeleton className="w-48 h-6" />}>
+        <IncomesContainer />
+      </Suspense>
     </Screen>
   )
 }

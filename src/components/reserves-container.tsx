@@ -12,7 +12,8 @@ export default async function ReservesContainer({ date, isHome }: TProps) {
 
   if (data instanceof Error) return <span>{data.message}</span>
 
-  if (data.length === 0) return <span>No hay reservas</span>
+  if (data.length === 0)
+    return <span className="leading-none">No hay reservas</span>
 
   let sortedData = data.sort(
     (a, b) =>
