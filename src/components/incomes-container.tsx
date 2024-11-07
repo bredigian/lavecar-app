@@ -1,6 +1,5 @@
-import { DollarSign, Plus } from "lucide-react"
-
 import { DateTime } from "luxon"
+import IncomeItem from "./income-item"
 import { Separator } from "./ui/separator"
 import { TReserve } from "@/types/reserves.types"
 import { getIncomes } from "@/services/finances.service"
@@ -49,19 +48,9 @@ export default async function IncomesContainer() {
               </span>
               <Separator className="max-w-24" />
             </div>
-            <ul className="space-y-1">
+            <ul className="space-y-4">
               {reserves.map((reserve) => (
-                <li
-                  key={reserve.id}
-                  className="flex items-start justify-between w-full"
-                >
-                  <span className="text-lg">{reserve.user_name}</span>
-                  <span className="text-green-600 flex items-center text-lg">
-                    <Plus size={16} />
-                    <DollarSign size={20} />
-                    12.500
-                  </span>
-                </li>
+                <IncomeItem key={reserve.id + "__income"} item={reserve} />
               ))}
             </ul>
           </article>
