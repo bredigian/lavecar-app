@@ -25,4 +25,6 @@ export type TReserve = {
   updated_at?: Date | string
 
   whatsapp_message_status?: number
+
+  value?: number
 }

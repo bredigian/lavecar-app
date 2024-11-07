@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button"
 import { DateTime } from "luxon"
 import IncomeItem from "@/components/income-item"
 import Link from "next/link"
-import { getIncomes } from "@/services/finances.service"
+import { getIncomes } from "@/services/incomes.service"
 
 export default async function DashboardIncomes() {
   let data = await getIncomes()
@@ -46,13 +46,13 @@ export default async function DashboardIncomes() {
         ) : (
           <ul className="flex flex-col gap-6 w-full">
             {data.map((item) => (
-              <IncomeItem key={item.id + "__income"} item={item} />
+              <IncomeItem key={item.id + "__income"} item={item} isForHome />
             ))}
           </ul>
         )}
       </CardContent>
       <CardFooter>
-        <Link href={"/dashboard/finances"} className="w-full">
+        <Link href={"/dashboard/incomes"} className="w-full">
           <Button className="w-full" variant={"secondary"}>
             Ver todos los ingresos
           </Button>

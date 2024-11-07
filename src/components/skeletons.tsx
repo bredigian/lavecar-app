@@ -34,7 +34,7 @@ export const SkeletonWorkhoursContainer = () => (
 
 export const SkeletonIncomeItem = ({ isForHome }: { isForHome?: boolean }) => (
   <li className={cn("flex flex-col w-full", !isForHome ? "gap-2" : "gap-4")}>
-    <Skeleton className="w-32 h-2" />
+    {isForHome && <Skeleton className="w-32 h-2" />}
     <div className="flex items-center justify-between w-full">
       <Skeleton className={cn("h-4", !isForHome ? "w-48" : "w-36")} />
       <Skeleton className={cn("h-4", !isForHome ? "w-24" : "w-20")} />
@@ -94,7 +94,7 @@ export const SkeletonDashboardIncomesContainer = () => (
       </ul>
     </CardContent>
     <CardFooter>
-      <Link href={"/dashboard/finances"} className="w-full">
+      <Link href={"/dashboard/incomes"} className="w-full">
         <Button className="w-full" variant={"secondary"}>
           Ver todos los ingresos
         </Button>

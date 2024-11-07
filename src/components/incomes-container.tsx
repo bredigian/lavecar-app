@@ -2,7 +2,7 @@ import { DateTime } from "luxon"
 import IncomeItem from "./income-item"
 import { Separator } from "./ui/separator"
 import { TReserve } from "@/types/reserves.types"
-import { getIncomes } from "@/services/finances.service"
+import { getIncomes } from "@/services/incomes.service"
 
 type TReserveByDate = {
   [date: string]: TReserve[]
@@ -11,12 +11,14 @@ type TReserveByDate = {
 export default async function IncomesContainer() {
   const data = await getIncomes()
 
+  console.log(data)
+
   if (data instanceof Error)
     return <span className="leading-none">{data.message}</span>
 
   const groupedByDate = Object.entries(
-    data.reduce<TReserveByDate>((acc, reserve) => {
-      const date = DateTime.fromISO(reserve.date as string)
+    data.reduce<TReserveByDate>((acc, income) => {
+      const date = DateTime.fromISO(income.date as string)
         .set({
           hour: 0,
           minute: 0,
@@ -27,11 +29,13 @@ export default async function IncomesContainer() {
         .toLocaleString(DateTime.DATE_SHORT)
 
       if (!acc[date]) acc[date] = []
-      acc[date].push(reserve)
+      acc[date].push({ ...(income.reserve as TReserve), value: income.value })
 
       return acc
     }, {})
   )
+
+  console.log(groupedByDate)
 
   return (
     <section className="mt-8 w-full space-y-4">

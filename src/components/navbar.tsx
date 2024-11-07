@@ -22,7 +22,7 @@ const ROUTES: TRoute[] = [
   { label: "Inicio", path: "/dashboard", icon: <HomeIcon /> },
   { label: "Turnos", path: "/dashboard/reserves", icon: <CalendarClockIcon /> },
   { label: "Horarios", path: "/dashboard/workhours", icon: <ClockIcon /> },
-  { label: "Ingresos", path: "/dashboard/finances", icon: <DollarSign /> },
+  { label: "Ingresos", path: "/dashboard/incomes", icon: <DollarSign /> },
 ]
 
 export default function Navbar() {
