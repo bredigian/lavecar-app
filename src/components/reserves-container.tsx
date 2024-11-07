@@ -31,6 +31,9 @@ export default async function ReservesContainer({ date, isHome }: TProps) {
         return false
       })
 
+  if (sortedData.length === 0)
+    return <span className="leading-none">No hay reservas pendientes.</span>
+
   return (
     <ul className="flex flex-col gap-8">
       {sortedData.map((reserve) => (
