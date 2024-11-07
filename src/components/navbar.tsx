@@ -1,6 +1,11 @@
 "use client"
 
-import { CalendarClockIcon, ClockIcon, HomeIcon } from "lucide-react"
+import {
+  CalendarClockIcon,
+  ClockIcon,
+  DollarSign,
+  HomeIcon,
+} from "lucide-react"
 
 import Link from "next/link"
 import { ReactNode } from "react"
@@ -17,13 +22,14 @@ const ROUTES: TRoute[] = [
   { label: "Inicio", path: "/dashboard", icon: <HomeIcon /> },
   { label: "Turnos", path: "/dashboard/reserves", icon: <CalendarClockIcon /> },
   { label: "Horarios", path: "/dashboard/workhours", icon: <ClockIcon /> },
+  { label: "Ingresos", path: "/dashboard/finances", icon: <DollarSign /> },
 ]
 
 export default function Navbar() {
   const pathname = usePathname()
 
   return (
-    <nav className="sticky z-50 bottom-0 flex items-center w-full justify-center gap-12 py-4 bg-white text-primary">
+    <nav className="sticky z-50 bottom-0 flex items-center w-full justify-center gap-6 py-4 bg-white text-primary">
       {ROUTES.map((route) => (
         <Link
           href={route.path}
