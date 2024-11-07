@@ -3,6 +3,8 @@ import { RedirectType, redirect } from "next/navigation"
 import DashboardHome from "@/sections/dashboard-home"
 import DashboardIncomes from "@/sections/dashboard-incomes"
 import Screen from "@/components/ui/screen"
+import { SkeletonDashboardIncomesContainer } from "@/components/skeletons"
+import { Suspense } from "react"
 import { cookies } from "next/headers"
 import { verifySession } from "@/services/auth.service"
 
@@ -25,7 +27,9 @@ export default async function AdminDashboard() {
       authData={data}
     >
       <DashboardHome />
-      <DashboardIncomes />
+      <Suspense fallback={<SkeletonDashboardIncomesContainer />}>
+        <DashboardIncomes />
+      </Suspense>
     </Screen>
   )
 }

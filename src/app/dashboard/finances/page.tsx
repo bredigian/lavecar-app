@@ -3,7 +3,7 @@ import { RedirectType, redirect } from "next/navigation"
 import IncomesContainer from "@/components/incomes-container"
 import Paragraph from "@/components/ui/paragraph"
 import Screen from "@/components/ui/screen"
-import { Skeleton } from "@/components/ui/skeleton"
+import { SkeletonIncomesContainer } from "@/components/skeletons"
 import { Suspense } from "react"
 import Title from "@/components/ui/title"
 import { cookies } from "next/headers"
@@ -29,7 +29,7 @@ export default async function Finaces() {
     >
       <Title>Ingresos</Title>
       <Paragraph>En esta pantalla verás el historial de ingresos.</Paragraph>
-      <Suspense fallback={<Skeleton className="w-48 h-6" />}>
+      <Suspense fallback={<SkeletonIncomesContainer />}>
         <IncomesContainer />
       </Suspense>
     </Screen>
