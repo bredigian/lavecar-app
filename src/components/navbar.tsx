@@ -2,6 +2,7 @@
 
 import {
   CalendarClockIcon,
+  Car,
   ClockIcon,
   DollarSign,
   HomeIcon,
@@ -19,9 +20,10 @@ type TRoute = {
 }
 
 const ROUTES: TRoute[] = [
-  { label: "Inicio", path: "/dashboard", icon: <HomeIcon /> },
-  { label: "Turnos", path: "/dashboard/reserves", icon: <CalendarClockIcon /> },
   { label: "Horarios", path: "/dashboard/workhours", icon: <ClockIcon /> },
+  { label: "Turnos", path: "/dashboard/reserves", icon: <CalendarClockIcon /> },
+  { label: "Inicio", path: "/dashboard", icon: <HomeIcon /> },
+  { label: "Lavados", path: "/dashboard/washes", icon: <Car /> },
   { label: "Ingresos", path: "/dashboard/incomes", icon: <DollarSign /> },
 ]
 
@@ -29,7 +31,7 @@ export default function Navbar() {
   const pathname = usePathname()
 
   return (
-    <nav className="sticky z-50 bottom-0 flex items-center w-full justify-center gap-6 py-4 bg-white text-primary">
+    <nav className="sticky z-50 bottom-0 flex items-center w-full justify-center gap-2 py-4 bg-white text-primary">
       {ROUTES.map((route) => (
         <Link
           href={route.path}

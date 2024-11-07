@@ -14,7 +14,7 @@ export default async function IncomesContainer() {
   console.log(data)
 
   if (data instanceof Error)
-    return <span className="leading-none">{data.message}</span>
+    return <span className="leading-none mt-8">{data.message}</span>
 
   const groupedByDate = Object.entries(
     data.reduce<TReserveByDate>((acc, income) => {
