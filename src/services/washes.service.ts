@@ -27,3 +27,18 @@ export const create = async (payload: TWashing) => {
 
   return data as TWashing
 }
+
+export const deleteById = async (id: TWashing["id"]) => {
+  const options: RequestInit = {
+    method: "DELETE",
+    body: JSON.stringify({ id }),
+    headers: { "Content-Type": "application/json" },
+  }
+  const PATH = `${API_URL}/v1/washes`
+
+  const res = await fetch(PATH, options)
+  const data = await res.json()
+  if (!res.ok) throw new Error((data as TError).message)
+
+  return data as TWashing
+}
