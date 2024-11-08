@@ -20,6 +20,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { ReloadIcon } from "@radix-ui/react-icons"
 import { TReserve } from "@/types/reserves.types"
+import { TWashing } from "@/types/washes.types"
 import { TWeekdayWithAssignedReserves } from "@/types/weekdays.types"
 import { TWorkhour } from "@/types/workhours.types"
 import revalidate from "@/lib/actions"
@@ -30,9 +31,10 @@ const WEEKDAYS = [0, 1, 2, 3, 4, 5, 6]
 
 type TProps = {
   weekdays: TWeekdayWithAssignedReserves[]
+  washes: TWashing[]
 }
 
-export const ReserveForm = ({ weekdays }: TProps) => {
+export const ReserveForm = ({ weekdays, washes }: TProps) => {
   const { push } = useRouter()
 
   const {
@@ -46,6 +48,9 @@ export const ReserveForm = ({ weekdays }: TProps) => {
 
   const [workhour, setWorkhour] = useState<string | undefined>(undefined)
   const [workhourError, setWorkhourError] = useState(false)
+
+  const [washing, setWashing] = useState<string | undefined>(undefined)
+  const [washingError, setWashingError] = useState(false)
 
   const [month, setMonth] = useState<Date>(new Date())
   const [disabledDates, setDisabledDates] = useState<string[]>([])
@@ -123,6 +128,11 @@ export const ReserveForm = ({ weekdays }: TProps) => {
       return
     }
 
+    if (!washing) {
+      setWashingError(true)
+      return
+    }
+
     const [hour, minute] = workhour.split(":").map((item) => Number(item))
 
     const date = DateTime.fromJSDate(values.date as Date)
@@ -137,6 +147,8 @@ export const ReserveForm = ({ weekdays }: TProps) => {
       status: "PENDING",
       payment_status: "PENDING",
       user_email: values.user_email || undefined,
+      washing_id: washing,
+      price: washes.find((item) => item.id === washing)?.price as number,
     }
 
     try {
@@ -207,60 +219,96 @@ export const ReserveForm = ({ weekdays }: TProps) => {
           </div>
         )}
       />
-      <div className="flex flex-col gap-2 w-full">
-        <div
-          className={cn(
-            "flex items-center justify-between gap-12 w-full",
-            !workhourError ? "my-4" : "mt-4"
-          )}
-        >
-          <Label>Horario</Label>
-          <Select
-            onValueChange={(value) => {
-              setWorkhour(value)
-              setWorkhourError(false)
-            }}
-            value={workhour}
-            disabled={!watch("date") ? true : false}
+      <div className="flex items-start justify-between gap-4 w-full">
+        <div className="flex flex-col gap-2 w-full max-w-32">
+          <div
+            className={cn(
+              "flex flex-col items-start gap-2",
+              !workhourError ? "my-4" : "mt-4"
+            )}
           >
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Seleccione un horario" />
-            </SelectTrigger>
-            <SelectContent className="w-full">
-              {workhoursOfDay.map((workhour) => {
-                const { hour, time } = workhour
-                const parsedHour = toTimeString(hour)
-                const parsedTime = toTimeString(time)
-                const toString = `${parsedHour}:${parsedTime}`
+            <Label>Horario</Label>
+            <Select
+              onValueChange={(value) => {
+                setWorkhour(value)
+                setWorkhourError(false)
+              }}
+              value={workhour}
+              disabled={!watch("date") ? true : false}
+            >
+              <SelectTrigger className="">
+                <SelectValue placeholder="Horario" />
+              </SelectTrigger>
+              <SelectContent className="">
+                {workhoursOfDay.map((workhour) => {
+                  const { hour, time } = workhour
+                  const parsedHour = toTimeString(hour)
+                  const parsedTime = toTimeString(time)
+                  const toString = `${parsedHour}:${parsedTime}`
 
-                const date = DateTime.fromJSDate(getValues("date") as Date)
-                  .setZone("America/Argentina/Buenos_Aires")
-                  .set({
-                    hour,
-                    minute: time,
+                  const date = DateTime.fromJSDate(getValues("date") as Date)
+                    .setZone("America/Argentina/Buenos_Aires")
+                    .set({
+                      hour,
+                      minute: time,
+                    })
+
+                  const isAssigned = assignedReservesOfDay.find((reserve) => {
+                    const reserveDate = DateTime.fromISO(reserve.date as string)
+                    return reserveDate.toMillis() === date.toMillis()
                   })
 
-                const isAssigned = assignedReservesOfDay.find((reserve) => {
-                  const reserveDate = DateTime.fromISO(reserve.date as string)
-                  return reserveDate.toMillis() === date.toMillis()
-                })
-
-                return (
-                  <SelectItem
-                    disabled={isAssigned ? true : false}
-                    key={toString}
-                    value={toString}
-                  >
-                    {toString}
-                  </SelectItem>
-                )
-              })}
-            </SelectContent>
-          </Select>
+                  return (
+                    <SelectItem
+                      disabled={isAssigned ? true : false}
+                      key={toString}
+                      value={toString}
+                    >
+                      {toString}
+                    </SelectItem>
+                  )
+                })}
+              </SelectContent>
+            </Select>
+          </div>
+          {workhourError && (
+            <small className="text-red-500 mb-4">
+              El horario es requerido.
+            </small>
+          )}
         </div>
-        {workhourError && (
-          <small className="text-red-500 mb-4">El horario es requerido.</small>
-        )}
+        <div className="flex flex-col gap-2 w-full">
+          <div className={cn("flex flex-col items-start gap-2 mt-4")}>
+            <Label>Lavado</Label>
+            <Select
+              onValueChange={(value) => {
+                setWashing(value)
+                setWashingError(false)
+              }}
+              value={washing}
+            >
+              <SelectTrigger className="grow">
+                <SelectValue placeholder="Tipo de lavado" />
+              </SelectTrigger>
+              <SelectContent className="">
+                {washes.map((washing) => {
+                  const { id, name } = washing
+
+                  return (
+                    <SelectItem key={name.toString()} value={id as string}>
+                      {name}
+                    </SelectItem>
+                  )
+                })}
+              </SelectContent>
+            </Select>
+          </div>
+          {washingError && (
+            <small className="text-red-500 mb-4">
+              El tipo de lavado es requerido.
+            </small>
+          )}
+        </div>
       </div>
 
       <div className="flex flex-col gap-2 w-full">
@@ -324,17 +372,23 @@ export const ReserveForm = ({ weekdays }: TProps) => {
           <small className="text-red-500">{errors.user_phone.message}</small>
         )}
       </div>
-      <Button
-        disabled={isSubmitting}
-        type="submit"
-        className="space-x-2 mt-auto"
-      >
+      <Button disabled={isSubmitting} type="submit" className="mt-auto">
         {!isSubmitting ? (
           <CalendarCheck size={16} color="#ffffff" />
         ) : (
           <ReloadIcon className="animate-spin size-4" />
         )}
-        <span>{!isSubmitting ? "Reservar" : "Reservando"}</span>
+        <span>
+          {!isSubmitting
+            ? `Reservar ${
+                washing
+                  ? `por $${washes
+                      .find((item) => item.id === washing)
+                      ?.price.toLocaleString("es-AR")}`
+                  : ""
+              }`
+            : "Reservando"}
+        </span>
       </Button>
     </form>
   )

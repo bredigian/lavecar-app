@@ -1,3 +1,5 @@
+import { TWashing } from "./washes.types"
+
 export enum RESERVE_STATUS {
   PENDING = "Pendiente",
   COMPLETED = "Completado",
@@ -23,6 +25,9 @@ export type TReserve = {
   payment_id: string
   created_at?: Date | string
   updated_at?: Date | string
+
+  price: number
+  washing_id?: TWashing["id"]
 
   whatsapp_message_status?: number
 
