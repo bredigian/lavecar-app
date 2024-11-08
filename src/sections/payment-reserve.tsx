@@ -62,12 +62,12 @@ export const GeneratePayment = ({ disabled, reserve, paymentId }: TProps) => {
       items: [
         {
           id,
-          title: "Lavado de vehículo",
+          title: `${reserve.WashingType?.name} de vehículo`,
           description: `Pago de reserva de lavado de vehiculo del día ${datetime.toLocaleString(
             DateTime.DATETIME_MED
           )}`,
           quantity: 1,
-          unit_price: 12500,
+          unit_price: reserve.price,
         },
       ],
       payer: {
@@ -103,7 +103,9 @@ export const GeneratePayment = ({ disabled, reserve, paymentId }: TProps) => {
       ) : (
         <ReloadIcon className="size-4 animate-spin" />
       )}
-      <span>Pagar con Mercado Pago</span>
+      <span>
+        Pagar ${reserve.price.toLocaleString("es-AR")} con Mercado Pago
+      </span>
     </Button>
   )
 }

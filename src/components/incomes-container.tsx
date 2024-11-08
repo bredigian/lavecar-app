@@ -11,8 +11,6 @@ type TReserveByDate = {
 export default async function IncomesContainer() {
   const data = await getIncomes()
 
-  console.log(data)
-
   if (data instanceof Error)
     return <span className="leading-none mt-8">{data.message}</span>
 
@@ -34,8 +32,6 @@ export default async function IncomesContainer() {
       return acc
     }, {})
   )
-
-  console.log(groupedByDate)
 
   return (
     <section className="mt-8 w-full space-y-4">

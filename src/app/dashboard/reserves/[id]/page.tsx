@@ -1,7 +1,9 @@
 import {
   Calendar,
   CalendarCheck,
+  Car,
   CreditCard,
+  DollarSign,
   Hash,
   Phone,
   SendHorizonal,
@@ -54,6 +56,8 @@ export default async function AdminReserveDetail({ params }: TProps) {
     status,
     payment_status,
     payment_id,
+    price,
+    WashingType,
   } = detail
 
   const datetime = DateTime.fromISO(date as string)
@@ -107,17 +111,30 @@ export default async function AdminReserveDetail({ params }: TProps) {
           </span>
         </section>
       </article>
-      <section className="flex items-center justify-between w-full">
-        <div className="flex items-center gap-2">
-          <CreditCard className="size-6" />
-          <span>Estado de pago</span>
+      <section className="flex flex-col gap-4 w-full">
+        <div className="flex items-center justify-between w-full">
+          <div className="flex items-center gap-2">
+            <Car className="size-6" />
+            <span>{WashingType?.name}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <DollarSign className="size-6" />
+            <span className="text-2xl">{price.toLocaleString("es-AR")}</span>
+          </div>
         </div>
-        <PaymentStatusSwitch
-          id={id}
-          payment_id={payment_id}
-          payment_status={payment_status}
-        />
+        <div className="flex items-center justify-between w-full">
+          <div className="flex items-center gap-2">
+            <CreditCard className="size-6" />
+            <span>Estado de pago</span>
+          </div>
+          <PaymentStatusSwitch
+            id={id}
+            payment_id={payment_id}
+            payment_status={payment_status}
+          />
+        </div>
       </section>
+
       <section className="flex flex-col gap-4 w-full">
         <HandleReserveStatusDialog
           id={id}

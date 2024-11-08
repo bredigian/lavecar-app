@@ -94,6 +94,7 @@ export default async function Reserve({ params, searchParams }: TProps) {
         <h2 className="font-semibold">Resumen</h2>
         <div className="flex items-start w-full justify-between">
           <ul className="flex flex-col gap-3">
+            <li className="text-sm">{detail.WashingType?.name}</li>
             <li className="text-sm">
               {date.toLocaleString(DateTime.DATETIME_MED_WITH_WEEKDAY)}
             </li>

@@ -29,6 +29,8 @@ export type TReserve = {
   price: number
   washing_id?: TWashing["id"]
 
+  WashingType?: TWashing
+
   whatsapp_message_status?: number
 
   value?: number
